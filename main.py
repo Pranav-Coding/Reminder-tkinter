@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import notify2
 import datetime
 from datetime import *
@@ -48,7 +49,12 @@ def Window():
 	canvas.title("Reminder")
 	file = open("data.json","r+")
 	data = json.load(file)
-	RTList = Listbox(canvas,width=50)
+	WFrame = Frame(canvas)
+	Wscrollbar = Scrollbar(WFrame,orient=VERTICAL)
+	RTList = Listbox(WFrame,width=50, yscrollcommand=Wscrollbar.set)
+	Wscrollbar.config(command=RTList.yview)
+	Wscrollbar.pack(side=RIGHT,fill=Y)
+	WFrame.pack()
 	RTList.pack(pady=15)
 	for task, time in data.items():
 		RTList.insert(END,f"{task} {time}")
